@@ -1,41 +1,33 @@
 # frozen_string_literal: true
 
+require 'covered/policy'
+
 def initialize(...)
 	super
-	
-	require_relative '../../lib/covered/config'
 	
 	require 'set'
 	require 'rugged'
 	@repository = nil
 end
 
-def load_coverage
-	# policy
-end
-
 # bake load_coverage_from_simplecov git:coverage
 # @parameter branch [String] the branch to compare against.
 # @parameter input [Covered::Policy] the input policy to use.
-def coverage(branch: self.default_branch, input:)
+def statistics(branch: self.default_branch, input:)
 	input ||= context.lookup("covered:policy:current").call
 	modifications = lines_modified(branch)
 	
 	# Calculate statistics:
 	statistics = Covered::Statistics.new
-	per_file_statistics = {}
 	
 	input.each do |coverage|
-		modified_lines = modifications[coverage.source.path]
-		next if modified_lines.nil?
-		
-		coverage = coverage.for_lines(modified_lines)
-		per_file_statistics[coverage.source.path] = Covered::Statistics.for(coverage)
-		
-		statistics << coverage
+		if modified_lines = modifications[coverage.source.path]
+			scoped_coverage = coverage.for_lines(modified_lines)
+			statistics << scoped_coverage
+		end
 	end
 	
-	return input
+	return statistics
 end
 
 private
