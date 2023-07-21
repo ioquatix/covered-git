@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
 	
 	spec.required_ruby_version = ">= 3.0"
 	
-	spec.add_dependency "covered", "~> 0.24"
 	spec.add_dependency "bake"
+	spec.add_dependency "covered", "~> 0.24"
+	spec.add_dependency "rugged", "~> 1.6"
 end
