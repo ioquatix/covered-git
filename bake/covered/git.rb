@@ -45,7 +45,7 @@ end
 def lines_modified(branch)
 	result = Hash.new{|k,v| k[v] = Set.new}
 	
-	diff = repository.diff_workdir(branch)
+	diff = repository.diff(repository.rev_parse(branch), repository.last_commit)
 	
 	diff.each_patch do |patch|
 		path = patch.delta.new_file[:path]
