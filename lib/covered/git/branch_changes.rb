@@ -6,8 +6,8 @@ module Covered
 				@root = root
 			end
 			
-			def repository(root = context.root)
-				@repository ||= Rugged::Repository.discover(root)
+			def repository
+				@repository ||= Rugged::Repository.discover(@root)
 			end
 			
 			def default_branch
@@ -16,7 +16,8 @@ module Covered
 			
 			# Compute the lines modified for a given branch, returning a hash of paths to a set of line numbers.
 			# @returns [Hash(String, Set(Integer))]
-			def lines_modified(branch)
+			def lines_modified(branch = nil)
+				branch ||= default_branch
 				result = Hash.new{|k,v| k[v] = Set.new}
 				
 				diff = repository.diff(repository.rev_parse(branch), repository.last_commit)
