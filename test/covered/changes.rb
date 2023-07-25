@@ -14,6 +14,9 @@ describe Covered::Git::Changes do
 	def before
 		super
 		
+		repository.config['user.name'] = "Test Author"
+		repository.config['user.email'] = "test@example.com"
+		
 		oid = repository.write("Hello World!\n" * 10, :blob)
 		
 		index = repository.index
