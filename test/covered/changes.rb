@@ -33,6 +33,10 @@ describe Covered::Git::Changes do
 		Rugged::Commit.create(repository, options)
 	end
 	
+	it "has a default branch" do
+		expect(changes.default_branch).to be == "main"
+	end
+	
 	with "branch" do
 		def before
 			super
