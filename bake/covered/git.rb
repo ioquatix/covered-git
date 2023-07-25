@@ -8,12 +8,15 @@ def initialize(...)
 	require 'set'
 	require 'rugged'
 	@repository = nil
+	@repository_path = context.root
 end
 
 # bake load_coverage_from_simplecov git:coverage
 # @parameter branch [String] the branch to compare against.
+# @parameter repository_path [String] the path of the repository to diff.
 # @parameter input [Covered::Policy] the input policy to use.
-def statistics(branch: self.default_branch, input:)
+def statistics(branch: self.default_branch, repository_path: nil, input:)
+	@repository_path = repository_path
 	input ||= context.lookup("covered:policy:current").call
 	modifications = lines_modified(branch)
 	
@@ -32,8 +35,8 @@ end
 
 private
 
-def repository(root = context.root)
-	@repository ||= Rugged::Repository.discover(root)
+def repository
+	@repository ||= Rugged::Repository.discover(@repository_path)
 end
 
 def default_branch
