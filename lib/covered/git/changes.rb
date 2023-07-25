@@ -4,6 +4,7 @@
 # Copyright, 2023, by Samuel Williams.
 
 require 'rugged'
+require 'set'
 
 module Covered
 	module Git
