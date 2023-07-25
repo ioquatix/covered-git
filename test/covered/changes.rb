@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# Released under the MIT License.
+# Copyright, 2023, by Samuel Williams.
+
 require 'covered/git/changes'
 require 'tmpdir'
 
@@ -31,6 +34,8 @@ describe Covered::Git::Changes do
 		def before
 			super
 			
+			@branch = repository.branches.create("my-branch", "HEAD")
+			
 			lines = ["Hello World!\n"] * 10
 			lines[0] = ["Goodbye World!\n"]
 			lines << "Hullo World!\n"
@@ -47,8 +52,6 @@ describe Covered::Git::Changes do
 			options[:message] ||= "Initial commit."
 			options[:parents] = repository.empty? ? [] : [repository.head.target].compact
 			options[:update_ref] = 'HEAD'
-			
-			@branch = repository.branches.create("my-branch", "HEAD")
 			
 			Rugged::Commit.create(repository, options)
 		end

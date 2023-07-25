@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
 	spec.version = Covered::Git::VERSION
 	
 	spec.summary = "Provides coverage computation for git pull requests."
-	spec.authors = ["Samuel Williams"]
+	spec.authors = ["Samuel Williams", "Michael Adams"]
 	spec.license = "MIT"
 	
 	spec.cert_chain  = ['release.cert']
@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 		"homepage_uri" => "https://github.com/ioquatix/covered-git",
 	}
 	
-	spec.files = Dir.glob(['{lib,bake}/**/*', '*.md'], File::FNM_DOTMATCH, base: __dir__)
+	spec.files = Dir.glob(['{bake,lib}/**/*', '*.md'], File::FNM_DOTMATCH, base: __dir__)
 	
 	spec.required_ruby_version = ">= 3.0"
 	
