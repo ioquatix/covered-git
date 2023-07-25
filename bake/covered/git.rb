@@ -16,7 +16,7 @@ end
 # @parameter input [Covered::Policy] the input policy to use.
 def statistics(root: context.root, branch: nil, input:)
 	input ||= context.lookup("covered:policy:current").call
-	changes = Covered::Git::BranchChanges.new(root)
+	changes = Covered::Git::Changes.new(root)
 	modifications = changes.lines_modified(branch)
 	
 	# Calculate statistics:

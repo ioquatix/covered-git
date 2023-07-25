@@ -1,7 +1,9 @@
 
+require 'rugged'
+
 module Covered
 	module Git
-		class BranchChanges
+		class Changes
 			def initialize(root)
 				@root = root
 			end
